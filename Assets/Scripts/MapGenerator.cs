@@ -193,6 +193,16 @@ public class MapGenerator : MonoBehaviour
         return tileMap[randomCoord.x, randomCoord.y];
     }
 
+    public Transform GetTileFromPosition(Vector3 position)
+    {
+        int x = Mathf.RoundToInt(position.x / tileSize + (currentMap.mapSize.x - 1) / 2f); // reverse the formula used in the CoorToPosition function
+        int y = Mathf.RoundToInt(position.z / tileSize + (currentMap.mapSize.y - 1) / 2f); 
+        x = Mathf.Clamp(x, 0, tileMap.GetLength(0) - 1);
+        y = Mathf.Clamp(y, 0, tileMap.GetLength(1) - 1);
+
+        return tileMap[x,y];
+    }
+
     [System.Serializable]
     public struct Coord 
     {
