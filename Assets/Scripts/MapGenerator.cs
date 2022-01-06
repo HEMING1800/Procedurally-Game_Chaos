@@ -25,18 +25,23 @@ public class MapGenerator : MonoBehaviour
 
     Map currentMap;
 
-    void Start()
-    {
-        generateMap();
+    void Awake()
+    {   
+        FindObjectOfType<Spawner>().OnNewWave += OnNewWave;
     }
 
+    void OnNewWave(int waveNumber)
+    {
+        mapIndex = waveNumber - 1;
+        generateMap();
+    }
     public void generateMap() {
         currentMap = maps[mapIndex];
         tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];
         System.Random prng = new System.Random(currentMap.seed);
         GetComponent<BoxCollider>().size = new Vector3(currentMap.mapSize.x * tileSize, .05f, currentMap.mapSize.y * tileSize); // apply ground collider
 
-        // implement Fisher-Yates Shuffle, generate coords
+        // implement Fisher-Yates Shuffle, generate coords queue
         allTileCoords = new List<Coord>();
         for (int x = 0; x < currentMap.mapSize.x; x++)
         {
@@ -81,7 +86,7 @@ public class MapGenerator : MonoBehaviour
 
         for(int i = 0; i < obstacleCount; i++)
         {
-            Coord randomCoord = GetRandomCoord();
+            Coord randomCoord = GetRandomCoord(); // get Coords of obstacles 
             obstacleMap[randomCoord.x, randomCoord.y] = true;
             currentObstacleCount++;
 

@@ -29,6 +29,8 @@ public class Spawner : MonoBehaviour
 
     MapGenerator map;
 
+    public event System.Action<int> OnNewWave;
+
     void Start()
     {   
         // find the player position
@@ -119,6 +121,11 @@ public class Spawner : MonoBehaviour
 
             enemiesRemainingToSpawn = currentWave.enemyCount;
             enemiesRemainingAlive = enemiesRemainingToSpawn;
+
+            if(OnNewWave != null)
+            {
+                OnNewWave(currentWaveNumber);
+            }
         }
     }
 
