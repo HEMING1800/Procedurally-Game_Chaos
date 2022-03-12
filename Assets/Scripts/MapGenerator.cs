@@ -30,11 +30,13 @@ public class MapGenerator : MonoBehaviour
         FindObjectOfType<Spawner>().OnNewWave += OnNewWave;
     }
 
+    // Call the next map and new attack wave
     void OnNewWave(int waveNumber)
     {
         mapIndex = waveNumber - 1;
         generateMap();
     }
+
     public void generateMap() {
         currentMap = maps[mapIndex];
         tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];

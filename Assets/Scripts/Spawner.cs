@@ -126,15 +126,22 @@ public class Spawner : MonoBehaviour
             {
                 OnNewWave(currentWaveNumber);
             }
+
+            ResetPlayerPosition();
         }
+    }
+    
+    // Reset the player location to the original respawn point
+    void ResetPlayerPosition(){
+        playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 3;
     }
 
     // Enemy attacks wave
     [System.Serializable]
-   public class Wave
-   {
+    public class Wave
+    {
        public int enemyCount;
        public float timeBetweenSpawn;
 
-   }
+    }
 }
