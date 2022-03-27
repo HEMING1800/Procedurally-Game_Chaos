@@ -8,8 +8,10 @@ public class Enemy : LivingEntity
     public enum State{Idle, Chasing, Attacking};
     State currentState;
 
+    public ParticleSystem deathEffect; // The partical effect once the entity is dead
+
     UnityEngine.AI.NavMeshAgent pathFinder;
-    Transform target; //trace the player
+    Transform target; // Trace the player
     LivingEntity targetEntity;
     Material skinMaterial;
     
@@ -26,7 +28,7 @@ public class Enemy : LivingEntity
 
     protected override void Start()
     {
-        // call the Start on the LivingEntity
+        // Call the Start on the LivingEntity
         base.Start();
 
         skinMaterial = GetComponent<Renderer>().material;
@@ -38,7 +40,7 @@ public class Enemy : LivingEntity
             hasTarget = true;
             currentState = State.Chasing;
             pathFinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
-            target = playerFind.transform; // trace the game obejct with Tag "Player"
+            target = playerFind.transform; // Trace the game obejct with Tag "Player"
             
             targetEntity = target.GetComponent<LivingEntity>();
             targetEntity.OnDeath += OnTargetDeath;
@@ -50,7 +52,18 @@ public class Enemy : LivingEntity
         StartCoroutine (UpdatePath ());
     }
 
-    // once the target died, no longer has target
+    public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    {   
+        // If the enemy is dead, create the death effect
+        if(damage >= health){
+
+            // Destroy the enemy death effect particles after start life time
+           Destroy(Instantiate(deathEffect.gameObject, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)) as GameObject, deathEffect.startLifetime);
+        }
+        base.TakeHit(damage, hitPoint, hitDirection);
+    }
+
+    // Once the target died, no longer has target
     void OnTargetDeath()
     {
         hasTarget = false;
@@ -112,7 +125,7 @@ public class Enemy : LivingEntity
         pathFinder.enabled = true;
     }
 
-        // Check the next position
+    // Check the next position
     IEnumerator UpdatePath()
     {
         float refreshRate = .25f;  // recalculate 4 times per second
