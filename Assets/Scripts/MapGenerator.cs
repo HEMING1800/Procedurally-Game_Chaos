@@ -9,6 +9,7 @@ public class MapGenerator : MonoBehaviour
 
     public Transform tilePrefab;
     public Transform obstaclePrefab;
+    public Transform mapFloor; // The ground floor
     public Transform navmeshFloor;
     public Transform navmeshMaskPrefab;
     public Vector2 maxMapSize;
@@ -41,7 +42,6 @@ public class MapGenerator : MonoBehaviour
         currentMap = maps[mapIndex];
         tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];
         System.Random prng = new System.Random(currentMap.seed);
-        GetComponent<BoxCollider>().size = new Vector3(currentMap.mapSize.x * tileSize, .05f, currentMap.mapSize.y * tileSize); // apply ground collider
 
         // implement Fisher-Yates Shuffle, generate coords queue
         allTileCoords = new List<Coord>();
@@ -137,6 +137,8 @@ public class MapGenerator : MonoBehaviour
         maskBottom.localScale = new Vector3(maxMapSize.x, 1, (maxMapSize.y - currentMap.mapSize.y) / 2f) * tileSize;
 
         navmeshFloor.localScale = new Vector3(maxMapSize.x, maxMapSize.y) * tileSize;
+
+        mapFloor.localScale = new Vector3(currentMap.mapSize.x * tileSize, currentMap.mapSize.y * tileSize); // apply ground floor collider
     }
     
     // check all accessible tiles, not be occupied by obstacles, are connected

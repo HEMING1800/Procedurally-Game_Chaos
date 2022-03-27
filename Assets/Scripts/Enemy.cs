@@ -26,30 +26,52 @@ public class Enemy : LivingEntity
     float targetCollisionRadius;
     bool hasTarget;
 
-    protected override void Start()
-    {
-        // Call the Start on the LivingEntity
-        base.Start();
-
-        skinMaterial = GetComponent<Renderer>().material;
-        originalColor = skinMaterial.color;
-
+    // Use Awake to initialize variables or states before the application starts
+    void Awake(){
+        
         GameObject playerFind = GameObject.FindGameObjectWithTag("Player");
+        pathFinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
         if( playerFind != null)
         {   
             hasTarget = true;
-            currentState = State.Chasing;
-            pathFinder = GetComponent<UnityEngine.AI.NavMeshAgent>();
-            target = playerFind.transform; // Trace the game obejct with Tag "Player"
             
+            target = playerFind.transform; // Trace the game obejct with Tag "Player"  
             targetEntity = target.GetComponent<LivingEntity>();
-            targetEntity.OnDeath += OnTargetDeath;
 
             myCollisionRadius = GetComponent<CapsuleCollider>().radius;
             targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
         }
         
-        StartCoroutine (UpdatePath ());
+    }
+
+    protected override void Start()
+    {
+        // Call the Start on the LivingEntity
+        base.Start();
+
+        if(hasTarget)
+        {   
+            currentState = State.Chasing;        
+            targetEntity.OnDeath += OnTargetDeath;
+
+            StartCoroutine (UpdatePath ());
+        }
+    }
+
+    public void SetCharacteristics(float moveSpeed, int hitsToKillPlayer, float enemyHealth, Color skinColor)
+    {
+        pathFinder.speed = moveSpeed;
+
+        if (hasTarget){
+            damage = Mathf.Ceil(targetEntity.initialHealth / hitsToKillPlayer);
+        }
+        initialHealth = enemyHealth;
+
+        // Set the enemy's color
+        skinMaterial = GetComponent<Renderer>().material;
+        skinMaterial.color = skinColor;
+        originalColor = skinMaterial.color;
     }
 
     public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)

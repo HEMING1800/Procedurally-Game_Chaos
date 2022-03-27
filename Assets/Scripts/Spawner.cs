@@ -1,5 +1,5 @@
 /*
-Spawner charges the enemies display on the map
+Spawner charges all enemies display on the map
 */
 using System.Collections;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ public class Spawner : MonoBehaviour
     bool isCamping;
     Vector3 campPositionOld;
 
-    bool isDisable; // when the player dead, True
+    bool isDisable; // When the player dead, True
 
     MapGenerator map;
 
@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {   
-        // find the player position
+        // Find the player position
         playerEntity = FindObjectOfType<Player>();
         playerT = playerEntity.transform;
 
@@ -57,7 +57,8 @@ public class Spawner : MonoBehaviour
                 campPositionOld = playerT.position;
             }
 
-            if (enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime)
+            // In the round, if all enemies do not be eliminated or it is infinite round, game needs to continue generate enemies
+            if ((enemiesRemainingToSpawn > 0 || currentWave.infinite) && Time.time > nextSpawnTime)
             {
                 enemiesRemainingToSpawn--;
                 nextSpawnTime = Time.time + currentWave.timeBetweenSpawn;
@@ -72,7 +73,7 @@ public class Spawner : MonoBehaviour
     {   
         float spawnDelay = 1;
         float tileFlashSpeed = 4; 
-        Transform spawnTile = map.GetRandomOpenTile(); //get random map position 
+        Transform spawnTile = map.GetRandomOpenTile(); //Get random map position 
 
         if(isCamping)
         {
@@ -84,7 +85,7 @@ public class Spawner : MonoBehaviour
         Color flashColor = Color.red;
         float spawnTimer = 0;
 
-        // flash the tile before enemy is generated
+        // Flash the tile before enemy is generated
         while(spawnTimer < spawnDelay)
         {   
             tileMat.color = Color.Lerp(initialColor, flashColor, Mathf.PingPong(spawnTimer * tileFlashSpeed, 1));
@@ -93,8 +94,9 @@ public class Spawner : MonoBehaviour
             yield return null;
         }
 
-        Enemy spawnedEnemy = Instantiate (enemy, spawnTile.position + Vector3.up, Quaternion.identity) as Enemy;
+        Enemy spawnedEnemy = Instantiate (enemy, spawnTile.position + Vector3.up, Quaternion.identity) as Enemy; // Generate enemy
         spawnedEnemy.OnDeath += OnEnemyDeath; // OnEnemyDeath subscribes to OnDeath event
+        spawnedEnemy.SetCharacteristics(currentWave.moveSpeed, currentWave.hitsToKillPlayer, currentWave.enemyHealth, currentWave.skinColor);
     }
 
     void OnPlayerDeath()
@@ -139,9 +141,15 @@ public class Spawner : MonoBehaviour
     // Enemy attacks wave
     [System.Serializable]
     public class Wave
-    {
-       public int enemyCount;
-       public float timeBetweenSpawn;
+    {   
+        public bool infinite; // Infinite enemy
+        public int enemyCount;
+        public float timeBetweenSpawn;
 
+        // Different difficulties with different enemy attributes
+        public float moveSpeed;
+        public int hitsToKillPlayer;
+        public float enemyHealth;
+        public Color skinColor;
     }
 }
