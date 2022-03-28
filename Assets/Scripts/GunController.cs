@@ -33,4 +33,12 @@ public class GunController : MonoBehaviour
             equippedGun.Shoot();
         }
     }
+
+    // Get the height of the weapon
+    public float GunHeight
+    {
+        get{
+            return weaponHold.position.y;
+        }
+    }
 }

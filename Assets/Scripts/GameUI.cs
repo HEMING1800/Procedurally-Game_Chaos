@@ -18,6 +18,7 @@ public class GameUI : MonoBehaviour
     void OnGameOver(){
         StartCoroutine(Fade(Color.clear, Color.white, 1));
         gameOverUI.SetActive(true);
+        Cursor.visible = true; // Show the cursor
     }
 
     IEnumerator Fade(Color from, Color to, float time){
