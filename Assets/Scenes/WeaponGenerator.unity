@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -298,4 +298,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1846442481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846442483}
+  - component: {fileID: 1846442482}
+  m_Layer: 0
+  m_Name: WeaponGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1846442482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846442481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1a654e38a6746469659683de55b279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodies:
+  - {fileID: 1977173107397304, guid: 798cb7c66c53daa4e9dfde3b78ca820d, type: 3}
+  - {fileID: 1351296829724886, guid: d00f45beaff3f7549a8b9828edbd95a0, type: 3}
+  barrels:
+  - {fileID: 1897447415801718, guid: 5baf3273069617042be1844aef6dd10c, type: 3}
+  - {fileID: 1124817584300026, guid: fe7316cbd93408c4f9f7940cdd07cfa7, type: 3}
+  stocks:
+  - {fileID: 1355569855112740, guid: 84dfee575e05bd64c83fa442b0ad8052, type: 3}
+  - {fileID: 1046775577958346, guid: 19bb046d78fe95a4e8df4ad4368a4ab8, type: 3}
+  scopes:
+  - {fileID: 1567561224783704, guid: dac7aad86aa407c4fbd4311625527a04, type: 3}
+  - {fileID: 1749313787554918, guid: 6253d2227d9d29a4c958ee5f3672695e, type: 3}
+  magazines:
+  - {fileID: 1701473923304246, guid: 450dc7b84ac3cf84a9a689ea66d3cc39, type: 3}
+  - {fileID: 1518392200275852, guid: 683cea9cafc46c342a65900773c19f0b, type: 3}
+  grips:
+  - {fileID: 1841638818296258, guid: cf4a38f5f354c6248ab1a06690f16ff3, type: 3}
+  - {fileID: 1567061614463268, guid: 2dee49ad052ba7243a851642fc5970a5, type: 3}
+--- !u!4 &1846442483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846442481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
