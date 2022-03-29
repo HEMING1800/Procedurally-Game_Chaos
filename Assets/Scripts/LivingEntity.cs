@@ -11,13 +11,14 @@ public class LivingEntity : MonoBehaviour, IDamageable
     public event System.Action OnDeath;
 
     protected virtual void Start()
-    {
+    {   
+        // Implement the initial health level
         health = initialHealth;
     }
 
     public virtual void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {   
-        //TO DO: hit
+        
         TakeDamage(damage);
     }
 
@@ -32,6 +33,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
     }
 
+    // If enetity is dead, it should be destried in the game
     [ContextMenu("Self Destruct")]
     protected void Die()
     {

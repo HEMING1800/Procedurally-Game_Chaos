@@ -12,14 +12,14 @@ public class MapGenerator : MonoBehaviour
     public Transform mapFloor; // The ground floor
     public Transform navmeshFloor;
     public Transform navmeshMaskPrefab;
-    public Vector2 maxMapSize;
+    public Vector2 maxMapSize; // The map size (X,Y)
     
     [Range(0,1)]
     public float outlinePercent;
 
     public float tileSize;
 
-    List<Coord> allTileCoords;
+    List<Coord> allTileCoords; // Record all tiles' information: Transform...
     Queue<Coord> shuffleTileCoords;
     Queue<Coord> shuffleOpenTileCoords;
     Transform[,] tileMap;
@@ -72,9 +72,9 @@ public class MapGenerator : MonoBehaviour
            for(int y = 0; y < currentMap.mapSize.y; y++)
            {
                Vector3 tilePosition = CoordToPosition(x,y);
-               Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90)) as Transform;
+               Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90)) as Transform; // Rotate the tile 90 degree
                newTile.localScale = Vector3.one * (1-outlinePercent) * tileSize;
-               newTile.parent = mapHolder;
+               newTile.parent = mapHolder; // Organise all tiles
                tileMap[x,y] = newTile;
            }
         }
@@ -212,6 +212,7 @@ public class MapGenerator : MonoBehaviour
         return tileMap[x,y];
     }
 
+    // Struct must be Serializable to show in the inspector
     [System.Serializable]
     public struct Coord 
     {

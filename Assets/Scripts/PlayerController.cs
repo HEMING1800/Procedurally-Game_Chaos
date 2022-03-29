@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody>();
     }
 
+    // Player should move as input speed
     public void Move(Vector3 inputVelocity)
     {
         velocity = inputVelocity;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         Vector3 heightCorrectedPoint = new Vector3(lookPoint.x, transform.position.y, lookPoint.z); //void the player to rotate in y-axis
         transform.LookAt(heightCorrectedPoint);
     }
+    
     void FixedUpdate()
     {
         myRigidbody.MovePosition(myRigidbody.position + velocity * Time.fixedDeltaTime);
