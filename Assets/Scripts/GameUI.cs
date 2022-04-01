@@ -7,6 +7,7 @@ public class GameUI : MonoBehaviour
 {
 
     public Image fadePlane;
+
     public GameObject gameOverUI;
     
     //The banner which shows at the begining of each wave
@@ -15,17 +16,17 @@ public class GameUI : MonoBehaviour
 
     Spawner spawner;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        FindObjectOfType<Player>().OnDeath += OnGameOver;
-    }   
-
     void Awake()
     {
         spawner = FindObjectOfType<Spawner>();
         spawner.OnNewWave += OnNewWave;
     }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        FindObjectOfType<Player>().OnDeath += OnGameOver;
+    }   
 
     void OnNewWave(int waveNumber)
     {   
@@ -37,7 +38,12 @@ public class GameUI : MonoBehaviour
     }
 
     void OnGameOver(){
-        StartCoroutine(Fade(Color.clear, Color.grey, 1));
+        // Get the fade out plane's color
+        // Set the Alpha to 1 to avoid invisible at the final
+        Color imageClor = fadePlane.color;
+        Color fadeOutColor = new Color(imageClor.r, imageClor.g, imageClor.b, 1f);
+
+        StartCoroutine(Fade(Color.clear, fadeOutColor, 1));
         gameOverUI.SetActive(true);
         Cursor.visible = true; // Show the cursor
     }
@@ -73,8 +79,8 @@ public class GameUI : MonoBehaviour
     // The fade animation of the game over UI
     IEnumerator Fade(Color from, Color to, float time){
         float speed = 1 / time;
-        float percent = 0 ;
-        
+        float percent = 0;
+
         while(percent < 1){
             percent += Time.deltaTime * speed;
             fadePlane.color = Color.Lerp(from, to, percent);
