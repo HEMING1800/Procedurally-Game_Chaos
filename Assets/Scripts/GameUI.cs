@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
+/*
+    This class controls the game over UI
+*/
 public class GameUI : MonoBehaviour
 {
 
@@ -10,14 +13,15 @@ public class GameUI : MonoBehaviour
 
     public GameObject gameOverUI;
     
-    //The banner which shows at the begining of each wave
+    // The banner which shows at the begining of each wave
     public RectTransform waveBanner;
     public Text waveTitle;
 
     Spawner spawner;
 
+    // Initial parameter before the Start
     void Awake()
-    {
+    {   
         spawner = FindObjectOfType<Spawner>();
         spawner.OnNewWave += OnNewWave;
     }
@@ -28,6 +32,7 @@ public class GameUI : MonoBehaviour
         FindObjectOfType<Player>().OnDeath += OnGameOver;
     }   
 
+    // Show the game wave on the banner
     void OnNewWave(int waveNumber)
     {   
         // Display the specific wave on the banner
@@ -37,6 +42,7 @@ public class GameUI : MonoBehaviour
         StartCoroutine(BannerAnimation());
     }
 
+    // Show the game over UI once the player died
     void OnGameOver(){
         // Get the fade out plane's color
         // Set the Alpha to 1 to avoid invisible at the final
@@ -47,8 +53,9 @@ public class GameUI : MonoBehaviour
         gameOverUI.SetActive(true);
         Cursor.visible = true; // Show the cursor
     }
-    
-    // // The uplift animation of the new wave banner
+
+
+    // The uplift animation of the new wave banner
     IEnumerator BannerAnimation()
     {   
         float delayTime = 1f;
@@ -88,8 +95,15 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    // UI Input
+    // Start a new game
     public void StartNewGame(){
         Application.LoadLevel("Game");
     }
+
+    // Back to game's main menu
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+    
 }
