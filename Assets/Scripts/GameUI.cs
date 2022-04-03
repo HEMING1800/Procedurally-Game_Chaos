@@ -17,7 +17,15 @@ public class GameUI : MonoBehaviour
     public RectTransform waveBanner;
     public Text waveTitle;
 
+    // Display Score
+    public Text scoreUI;
+    public Text gameoverScoreUI;
+
+    // Set the Pivot to the leftest, by editing scale to show the health bar animation
+    public RectTransform healthBar; 
+
     Spawner spawner;
+    Player player;
 
     // Initial parameter before the Start
     void Awake()
@@ -29,8 +37,22 @@ public class GameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindObjectOfType<Player>().OnDeath += OnGameOver;
+        player = FindObjectOfType<Player>();
+        player.OnDeath += OnGameOver;
     }   
+
+    void Update()
+    {   
+        // could get the 000010 in thge score board
+        scoreUI.text = ScoreBoard.score.ToString("D6");
+        
+        float healthPercent = 0;
+        if(player != null){
+            healthPercent = player.health / player.initialHealth;
+        }
+        // Changing the health bar's scale for health deduction effect
+        healthBar.localScale = new Vector3(healthPercent, 1, 1);
+    }
 
     // Show the game wave on the banner
     void OnNewWave(int waveNumber)
@@ -50,6 +72,11 @@ public class GameUI : MonoBehaviour
         Color fadeOutColor = new Color(imageClor.r, imageClor.g, imageClor.b, 1f);
 
         StartCoroutine(Fade(Color.clear, fadeOutColor, 1));
+
+        gameoverScoreUI.text = scoreUI.text;
+        scoreUI.gameObject.SetActive(false);
+        healthBar.transform.parent.gameObject.SetActive(false);
+
         gameOverUI.SetActive(true);
         Cursor.visible = true; // Show the cursor
     }
@@ -105,5 +132,4 @@ public class GameUI : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
-    
 }

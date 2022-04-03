@@ -55,5 +55,11 @@ public class Player : LivingEntity
         {
             gunController.Shoot();
         }
+
+        // If player fall from the eadge, game over
+        if(transform.position.y < -10)
+        {
+            TakeDamage(health);
+        }
     }
 }

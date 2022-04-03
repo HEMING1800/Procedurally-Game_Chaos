@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+    This class controls the enemy which generated on the level
+*/
 [RequireComponent (typeof (UnityEngine.AI.NavMeshAgent))]
 public class Enemy : LivingEntity
 {
-    public enum State{Idle, Chasing, Attacking};
+    public enum State{Idle, Chasing, Attacking}; // Enemy can be idle, chasing, or attacking
     State currentState;
 
     public ParticleSystem deathEffect; // The partical effect once the entity is dead
+    public static event System.Action OnDeathStatic;
 
     UnityEngine.AI.NavMeshAgent pathFinder;
     Transform target; // Trace the player
@@ -78,6 +82,9 @@ public class Enemy : LivingEntity
     {   
         // If the enemy is dead, create the death effect
         if(damage >= health){
+            if(OnDeathStatic != null){
+                OnDeathStatic();
+            }
 
             // Destroy the enemy death effect particles after start life time
            Destroy(Instantiate(deathEffect.gameObject, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)) as GameObject, deathEffect.startLifetime);
