@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
-{
+{   
     public Transform muzlle;
     public Projectile projectile;
     public float msBetweenShots = 100; // the shooting rate
@@ -11,6 +11,10 @@ public class Gun : MonoBehaviour
 
     float nextShotTime;
 
+    void Start()
+    {
+
+    }
     public void Shoot()
     {
         if (Time.time > nextShotTime){

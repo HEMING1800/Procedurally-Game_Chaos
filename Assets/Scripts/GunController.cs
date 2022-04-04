@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+    This class control the gun system in the game
+    Such as which position the gun shoud be spawn
+*/
 public class GunController : MonoBehaviour
 {   
     public Transform weaponHold; 
     public Gun startingGun;
+
     Gun equippedGun;
 
     void Start()

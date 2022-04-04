@@ -8,23 +8,11 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {   
     public GameObject mainMenu;
-
-    // Start is called before the first frame update
-    void Start()
+    
+    // Enter the gun generation scene once press the play button
+    public void GenerateGunScene()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    // Play the game once press the play button
-    public void Play()
-    {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("WeaponGenerator");
     }
 
     // Quit the game once press the quit button

@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa0e2d061a5dcc42bb57885ba7be453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generateGun: {fileID: 0}
   muzlle: {fileID: 0}
   projectile: {fileID: 0}
   msBetweenShots: 100
@@ -286,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa0e2d061a5dcc42bb57885ba7be453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generateGun: {fileID: 8381428611164767181, guid: 89f9f5db41f82a143abcd38176a2f7e8, type: 3}
   muzlle: {fileID: 5142316012716381940}
   projectile: {fileID: -2009996474402478386, guid: 8716476409620094d82b63619d66fa17, type: 3}
   msBetweenShots: 100

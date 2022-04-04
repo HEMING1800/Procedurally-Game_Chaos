@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WeaponGenerator : MonoBehaviour
 {   
@@ -11,27 +12,19 @@ public class WeaponGenerator : MonoBehaviour
     public List<GameObject> magazines; // Gun magazine parts
     public List<GameObject> grips; // Gun grip parts
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject generatedBody; // Generated gun
 
     // Update is called once per frame
     void Update()
     {   
-        // For the manuel testing. generate weapon if press the SPACE
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            GenerateWeapon();
-        }
+        
     }
 
-    void GenerateWeapon()
+    public void GenerateWeapon()
     {
         // Get a random body part, and generate it in the game
         GameObject randomBody = GetRandomPart(bodies);
-        GameObject generatedBody = Instantiate(randomBody, Vector3.zero, Quaternion.identity);
+        generatedBody = Instantiate(randomBody, Vector3.zero, Quaternion.identity);
         WeaponBody gunBody = generatedBody.GetComponent<WeaponBody>();
 
         // Generate each weapon parts randomly from the list
@@ -57,5 +50,29 @@ public class WeaponGenerator : MonoBehaviour
 
         // Set the parent 
         generatedPart.transform.parent = socket; 
+    }
+
+    // Enter game scene once press the start button
+    public void Play()
+    {   
+        if(generatedBody){
+            SceneManager.LoadScene("Game");
+        }
+    }
+
+    // Back to game's main menu
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    // Gun Generation
+    public void GunGeneration()
+    {
+        // Destroy the previous generated gun
+        if(generatedBody){
+            Destroy(generatedBody);
+        }
+        GenerateWeapon();
     }
 }

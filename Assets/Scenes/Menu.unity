@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 892226482}
+  gunGeneratorMenu: {fileID: 0}
 --- !u!4 &297540747
 Transform:
   m_ObjectHideFlags: 0
@@ -584,7 +585,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 297540746}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: GenerateGunScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

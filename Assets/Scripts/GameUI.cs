@@ -124,7 +124,7 @@ public class GameUI : MonoBehaviour
 
     // Start a new game
     public void StartNewGame(){
-        Application.LoadLevel("Game");
+        SceneManager.LoadScene("WeaponGenerator");
     }
 
     // Back to game's main menu
