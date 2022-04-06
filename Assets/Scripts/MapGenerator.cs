@@ -40,10 +40,14 @@ public class MapGenerator : MonoBehaviour
 
     public void generateMap() {
         currentMap = maps[mapIndex];
-        tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];
-        System.Random prng = new System.Random(currentMap.seed);
 
-        // implement Fisher-Yates Shuffle, generate coords queue
+        // Choose random seed depend input
+        int seed = Random.Range(1, currentMap.seed);
+
+        tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];
+        System.Random prng = new System.Random(seed);
+
+        // Implement Fisher-Yates Shuffle, generate coords queue
         allTileCoords = new List<Coord>();
         for (int x = 0; x < currentMap.mapSize.x; x++)
         {
@@ -52,9 +56,9 @@ public class MapGenerator : MonoBehaviour
                allTileCoords.Add(new Coord(x,y));
            }
         }
-        shuffleTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCoords.ToArray(), currentMap.seed));
+        shuffleTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCoords.ToArray(),seed));
 
-        // create map holder object
+        // Create map holder object
         string holderName = "Generated Map";
         // destroy the exist  Tiles
         if(transform.Find(holderName))
@@ -62,11 +66,11 @@ public class MapGenerator : MonoBehaviour
             DestroyImmediate(transform.Find(holderName).gameObject);
         }
 
-        // set the ganerate  tile to the Generated Map (child)
+        // Set the ganerate  tile to the Generated Map (child)
         Transform mapHolder = new GameObject(holderName).transform; 
         mapHolder.parent = transform;
 
-        // generate map tiles
+        // Generate map tiles
         for (int x = 0; x < currentMap.mapSize.x; x++)
         {
            for(int y = 0; y < currentMap.mapSize.y; y++)
@@ -117,7 +121,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        shuffleOpenTileCoords = new Queue<Coord>(Utility.ShuffleArray(allOpenCoords.ToArray(), currentMap.seed));
+        shuffleOpenTileCoords = new Queue<Coord>(Utility.ShuffleArray(allOpenCoords.ToArray(),seed));
 
         // creating navmesh maks 
         Transform maskLeft = Instantiate(navmeshMaskPrefab, Vector3.left * (currentMap.mapSize.x + maxMapSize.x) / 4f * tileSize, Quaternion.identity) as Transform;
@@ -182,7 +186,7 @@ public class MapGenerator : MonoBehaviour
         return targetAccessibleTileCount == accessibleTileCount;
     }
 
-    // make the map centered
+    // Make the map centered
     Vector3 CoordToPosition(int x, int y)
     {
         return new Vector3(-currentMap.mapSize.x/2f + 0.5f + x, 0, -currentMap.mapSize.y/2f + 0.5f + y) * tileSize; 
